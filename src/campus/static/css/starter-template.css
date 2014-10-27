@@ -7,6 +7,56 @@ body {
   text-align: center;
 }
 
+.table-margin {
+	margin-top: 30px;
+}
+.center{
+	text-align: center;
+}
 .campustalk-detail{
 	padding: 40px 15px;
+}
+.list-group-item:hover{
+	background-color:yellow;
+}
+html footer {
+    background-color: #333;
+    color: #bbb;
+    text-align: center;
+    font-size: 12px;
+    font-family: "Microsoft Yahei","Hiragino Sans GB","Helvetica Neue",Arial,sans-serif;
+}
+html footer .footer-content {
+    display: inline-block;
+    padding: 30px 0;
+    position: relative;
+    padding-right: 90px;
+}
+html footer a,
+html footer a:hover {
+    color: #bbb;
+    text-decoration: none;
+}
+html footer div {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+html footer div span { margin-left: 10px }
+html footer .icon-weibo {
+    font-size: 20px;
+    padding-right: 5px;
+    vertical-align: middle;
+    line-height: 21px;
+}
+html footer .nav span { white-space: nowrap }
+html footer .wechart {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
 }

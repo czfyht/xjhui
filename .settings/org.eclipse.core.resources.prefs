@@ -1,6 +1,14 @@
 eclipse.preferences.version=1
 encoding//src/campus/templates/campus_talk_detail.html=UTF-8
+encoding//src/campus/templates/campustalk_info_detail.html=UTF-8
+encoding//src/campus/templates/campustalk_info_list.html=UTF-8
+encoding//src/campus/templates/campustalk_list.html=UTF-8
+encoding//src/campus/templates/homepage.html=UTF-8
 encoding//src/campus/templates/users=UTF-8
 encoding//src/campus/templates/users/login.html=UTF-8
+encoding//src/campustalk/UrlsLoader.py=utf-8
 encoding//src/campustalk/views.py=utf-8
+encoding//src/campustalk/xjhSpider.py=utf-8
+encoding//src/records/models.py=utf-8
+encoding//src/records/views.py=utf-8
 encoding/<project>=UTF-8

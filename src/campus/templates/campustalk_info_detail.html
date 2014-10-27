@@ -1,0 +1,18 @@
+{% extends "base.html" %} 
+{% block title %}<title>筷子招聘-宣讲会详情</title>{% endblock %} 
+{% block keywords %}
+{% for campustalk in campustalk_info_list %}
+        <meta name="keywords" content="筷子招聘, 宣讲会, {{campustalk.company_name}}, {{campustalk.university_name}},{{campustalk.info_source}}">
+    	{% endfor %}
+
+{% endblock %}
+{% block content%}
+    <div class="jumbotron">
+    	<div class="container">
+    	{% for campustalk in campustalk_info_list %}
+    		<h3 class="center">{{campustalk.company_name}}</h3>
+        <p>{{ campustalk.company_introduce|safe  }}</p>
+    	{% endfor %}
+    	</div>
+    </div>
+{%endblock%}

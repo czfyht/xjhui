@@ -1,0 +1,22 @@
+{% extends "base.html" %} 
+{% block title %}<title>筷子招聘-宣讲会实录列表</title>{% endblock %} 
+
+{% block nav%}
+
+{%endblock%}
+
+{% block content%}
+		<div class="container starter-template list-group">
+
+		{% for item in campustalk_list %} 
+		<a href="/campustalk/detail/{{ item.id }}" class="list-group-item"
+			target="_blank">
+			<h4 >
+				<b>{{ item.company_name }}</b>
+			</h4>
+			<p class="list-group-item-text">{{ item.university }} {{item.location }} {{ item.date|date:"Y-m-d" }}</p>
+		</a> 
+		{% endfor %}
+
+	</div>
+{%endblock%}

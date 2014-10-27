@@ -1,6 +1,39 @@
 # Django settings for campus project.
+
+# SAE mysql
+# MYSQL_HOST = 'w.rdc.sae.sina.com.cn'
+# MYSQL_PORT = '3307'
+# MYSQL_USER = '43nzl423jx'
+# MYSQL_PASS = '1ilhi531kzi5mj3y22wlzzm1mm4kzzk14wxhl2z0'
+# MYSQL_DB = 'xjhui'
+
+
+
+
 import os.path
-DEBUG = True
+from os import environ
+import sae.const
+
+
+DEBUG = not environ.get("APP_NAME", "") 
+# DEBUG = False
+if DEBUG:
+#LOCAL 
+    MYSQL_DB = 'cumpus' 
+    MYSQL_USER = 'root' 
+    MYSQL_PASS = 'czfyht=1987' 
+    MYSQL_HOST_M = '127.0.0.1' 
+    MYSQL_HOST_S = '127.0.0.1' 
+    MYSQL_PORT = '3306' 
+else: 
+# DEBUG = True
+#SAE 
+    MYSQL_DB = sae.const.MYSQL_DB 
+    MYSQL_USER = sae.const.MYSQL_USER 
+    MYSQL_PASS = sae.const.MYSQL_PASS 
+    MYSQL_HOST_M = sae.const.MYSQL_HOST 
+    MYSQL_HOST_S = sae.const.MYSQL_HOST_S 
+    MYSQL_PORT = sae.const.MYSQL_PORT
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -9,14 +42,28 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+#         'NAME': 'C:\\Users\\huangtao\\workspace\\campus\\src\\sqlite.db',                      # Or path to database file if using sqlite3.
+#         'USER': '',                      # Not used with sqlite3.
+#         'PASSWORD': '',                  # Not used with sqlite3.
+#         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+#         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+#     }
+# }
+
+
+ 
 DATABASES = {
+  
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'C:\\Users\\huangtao\\workspace\\campus\\src\\sqlite.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE':   'django.db.backends.mysql',
+        'NAME':     MYSQL_DB,
+        'USER':     MYSQL_USER,
+        'PASSWORD': MYSQL_PASS,
+        'HOST':     MYSQL_HOST_M,
+        'PORT':     MYSQL_PORT,
     }
 }
 
@@ -41,11 +88,14 @@ USE_I18N = True
 USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
-USE_TZ = True
+USE_TZ = False
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 60*60*24*10000
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(os.path.dirname(__file__),'media')
+MEDIA_ROOT = os.path.join(os.path.dirname(__file__), 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -56,8 +106,8 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(os.path.dirname(__file__),'static')
-
+# STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static')
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
@@ -65,7 +115,9 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
 #                     os.path.join(STATIC_ROOT,'css').replace('\\','/'),
-                    ('css',os.path.join(STATIC_ROOT,'css').replace('\\','/') ),  
+                    ('css', os.path.join(STATIC_ROOT, 'css').replace('\\', '/')),
+                    ('img', os.path.join(STATIC_ROOT, 'img').replace('\\', '/')),
+                    ('js', os.path.join(STATIC_ROOT, 'js').replace('\\', '/')),
 #                     os.path.join(os.path.dirname(__file__), 'static').replace('\\','/'),
 #                     os.path.join('static'),
                     # Put strings here, like "/home/html/static" or "C:/www/django/static".
@@ -107,7 +159,7 @@ ROOT_URLCONF = 'campus.urls'
 WSGI_APPLICATION = 'campus.wsgi.application'
 
 TEMPLATE_DIRS = (
-                 os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+                 os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -123,6 +175,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'campustalk',
+    'records',
     'DjangoUeditor',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -156,3 +209,5 @@ LOGGING = {
         },
     }
 }
+
+

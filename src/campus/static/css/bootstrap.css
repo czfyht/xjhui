@@ -916,7 +916,7 @@ a {
 a:hover,
 a:focus {
   color: #2a6496;
-  text-decoration: underline;
+  text-decoration: none;
 }
 a:focus {
   outline: thin dotted;
@@ -4850,11 +4850,12 @@ a.list-group-item {
 a.list-group-item .list-group-item-heading {
   color: #333;
 }
+
 a.list-group-item:hover,
 a.list-group-item:focus {
-  color: #555;
+  color: #fff;
   text-decoration: none;
-  background-color: #f5f5f5;
+  background-color: #428bca;
 }
 .list-group-item.disabled,
 .list-group-item.disabled:hover,

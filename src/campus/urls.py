@@ -16,7 +16,25 @@ urlpatterns = patterns('campustalk.views',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^bootstrap/', 'bootstrap'),
     url('^$', 'homepage'),
-    url(r'^users/login/', 'users_login'),
+    url(r'^users/login/$', 'users_login'),
+    url(r'^campustalk/$', 'campus_talk'),
     url(r'^campustalk/detail/(\d+)/$', 'campus_talk_detail'),
-    url(r'^ueditor/',include('DjangoUeditor.urls' )),
+    url(r'^campustalk/list/([a-z]*)/$', 'campus_talk_info_list'),
+    url(r'^campustalk/list/detail/(\d+)/$', 'campus_talk_info_detail'),
+    url(r'^loadxjh/$', 'loadxjh'),
+    url(r'^loadshxjh/$', 'loadshxjh'),
+    url(r'^loadgzxjh/$', 'loadgzxjh'),
+    url(r'^loadurls/$', 'loadurls'),
+#     url(r'^loadxjh/$', 'load_campus_talk'),
+    url(r'^ueditor/',include('DjangoUeditor.urls')),
 )
+
+urlpatterns += patterns('records.views',
+    (r'^android/addrecord/$','addrecord_android'),
+    (r'^android/login/$',  'android_login'),
+    (r'^android/logout/$', 'android_logout'),
+    (r'^android/signup/$', 'android_signup'),
+)
+
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+urlpatterns += staticfiles_urlpatterns()
