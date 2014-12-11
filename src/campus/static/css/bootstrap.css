@@ -12,6 +12,7 @@ html {
 }
 body {
   margin: 0;
+  
 }
 article,
 aside,
@@ -4188,7 +4189,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-  background-color: #222;
+  background-color: #333;
   border-color: #080808;
 }
 .navbar-inverse .navbar-brand {
@@ -4550,6 +4551,8 @@ a.list-group-item.active > .badge,
   color: inherit;
   background-color: #eee;
 }
+
+
 .jumbotron h1,
 .jumbotron .h1 {
   color: inherit;

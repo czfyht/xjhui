@@ -10,10 +10,12 @@ import thread
 from django.utils import timezone
 
 from models import CampusTalk, CampusTalkInfo
-from xjhSpider import beijingyoudiandaxue, qinghuadaxue, beihang, beijingdaxue, beijingligong, beijingkeji
+from xjhSpider import beijingyoudiandaxue, qinghuadaxue, beihang, beijingdaxue, beijingligong, beijingkeji,beijingjiaotong
 from xjhSpider import shanghaijiaotongdaxue, tongjidaxue, fudandaxue, shanghaidaxue, donghuadaxue
 from xjhSpider import huananligongdaxue, guangzhoudaxue, guangzhougongyedaxue, jinandaxue, zhongshandaxue
-
+from django.core import serializers
+from rest_framework import viewsets
+from campustalk.serializers import CampusTalkInfoSerializer
 
 def bootstrap(request):
     return render_to_response("bootstrap.html")
@@ -33,6 +35,7 @@ def loadxjh(request):
 
 def loadshxjh(request):
     html = 'success'
+    beijingjiaotong()
     shanghaijiaotongdaxue()
     tongjidaxue()
     fudandaxue()
@@ -107,10 +110,39 @@ def campus_talk_detail(request, index):
     campustalk_list = CampusTalk.objects.filter(id=index) #这里返回的还是一个list，不是object
     return render_to_response("campus_talk_detail.html",{"campustalk_list":campustalk_list},context_instance=RequestContext(request))    #给template传过去的是一个list
 
+def bigFileView(request):
+    # do something...
+ 
+    def readFile(fn, buf_size=262144):
+        f = open(fn, "rb")
+        while True:
+            c = f.read(buf_size)
+            if c:
+                yield c
+            else:
+                break
+        f.close()
+ 
+    file_name = "big_file.txt"
+    response = HttpResponse(readFile(file_name))
+ 
+    return response
 
 
 def users_login(request):
     return render_to_response("users/login.html")
 
+
 def users_signup(request):
     return render_to_response("users/signup.html")
+
+
+def get_ct_json(request):
+    ct_info_list = CampusTalkInfo.objects.filter(university_name='清华大学')
+    data = serializers.serialize('json', ct_info_list)
+    data3 = data.decode('raw_unicode_escape')
+    return  HttpResponse(data3)
+
+class CampusTalkInfoViewSet(viewsets.ModelViewSet):
+    queryset = CampusTalkInfo.objects.all()
+    serializer_class = CampusTalkInfoSerializer

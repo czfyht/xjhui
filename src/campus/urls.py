@@ -2,9 +2,18 @@ from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-admin.autodiscover()
+from campustalk.views import *
+from rest_framework import routers
 
-urlpatterns = patterns('campustalk.views',
+router = routers.DefaultRouter()
+router.register(r'campusttalkinfo', CampusTalkInfoViewSet)
+admin.autodiscover()
+urlpatterns = [
+    # '',
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+]
+urlpatterns += patterns('campustalk.views',
     # Examples:
     # url(r'^$', 'campus.views.home', name='home'),
     # url(r'^campus/', include('campus.foo.urls')),
@@ -25,6 +34,8 @@ urlpatterns = patterns('campustalk.views',
     url(r'^loadshxjh/$', 'loadshxjh'),
     url(r'^loadgzxjh/$', 'loadgzxjh'),
     url(r'^loadurls/$', 'loadurls'),
+    url(r'^get_ct_json/$', 'get_ct_json'),
+#     url(r'^data/Zhaopinzhushou.apk/$', 'bigFileView'),
 #     url(r'^loadxjh/$', 'load_campus_talk'),
     url(r'^ueditor/',include('DjangoUeditor.urls')),
 )

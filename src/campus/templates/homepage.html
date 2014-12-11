@@ -10,18 +10,36 @@
 
 {% block content%}
 
-<div class="container starter-template">
-<div class="jumbotron">
-			<div class="container">
+<div class="container homepage">
+<div class="jumbotron"  style="position: relative;margin-top:50px;height:400px">
+			
 			<h1>筷子招聘</h1>
-							<p>招聘信息分享专家</p>
-				<p>完整记录宣讲会内容，宅在寝室听宣讲会</p>
-				<p>
-					<a class="btn btn-primary btn-lg" role="button" href="/campustalk/">查看详情
-						&raquo;</a>
-				</p>
-			</div>
-		</div>
+<div class="col-md-6"> 
+	<p>使用筷子招聘APP，您可以：</p>
+	<ul style="list-style-type:none;margin-left:0px;padding-left:0px;text-align:left">
+	<li ><span class="glyphicon glyphicon-ok"></span>
+	<span style="font-size:20px">记录个人应聘行程</span></li>
+	<li><span class="glyphicon glyphicon-ok"></span>
+	<span style="font-size:20px">及时收到企业笔试、面试通知</span></li>
+	<li><span class="glyphicon glyphicon-ok"></span>
+	<span style="font-size:20px">了解各大高校宣讲会信息</span></li>
+	</ul>
+
+	<p>
+		<a class="btn btn-primary btn-lg" role="button" href="/campustalk/list/beijing/">宣讲会信息
+			&raquo;</a>
+	</p>
+</div>
+<div class="col-md-6 down_box">
+	<a class="btn btn-primary btn-lg" role="button" href="{{STATIC_URL}}data/kuaizizhaopin.apk">
+	<img src="{{STATIC_URL}}img/android.png"/>安卓APP下载</img>
+	</a>
+	<a class="btn btn-primary btn-lg" role="button" >
+	<img src="{{STATIC_URL}}img/ios.png"/>iOS (研发中)</img>
+	</a>
+	           
+</div>
+</div>
 </div>
 {%endblock%}
 

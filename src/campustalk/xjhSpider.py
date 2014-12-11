@@ -215,59 +215,45 @@ def qinghuadaxue():
         
         
 def beihang():
-    for page_index in range(1, 6):
-        url = 'http://career.buaa.edu.cn/website/zphxx.h?pageNo=' + str(page_index)
+    beihang_list = CampusTalkInfo.objects.filter(university_name_short="北航")
+    opener = urllib2.build_opener()
+    opener.addheaders = [('User-Agent','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11')]
+ 
+    for page_index in range(1, 1+3):
+        url = 'http://career.buaa.edu.cn/getJobfairAllInfoAction.dhtml?more=all&pageIndex=' + str(page_index)+'&selectedNavigationName=RecruitmentInfoMain&selectedItem=jobFair'
         try:
-#             file = open('beijingyoudian.html','r')
-#             html = file.read()
-            opener=urllib2.build_opener()
-            opener.addheaders = [('User-agent','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)')]
+
             response = opener.open(url)
             html = response.read()
             soup = BeautifulSoup(html)
-            beihang_list = CampusTalkInfo.objects.filter(university_name_short="北航")
-            tables = soup.find_all("table", border="0",width="100%", align="center",cellpadding="0",cellspacing="0")
-            tables2 = tables[1].find_all("table")
-            for table in tables2:
-                td_list = table.find_all("td")
+            tables = soup.find_all("table")
+            trs = tables[0].find_all("tr")
+#             tr = trs[0]
+            for tr in trs:
                 campusTalkInfo = CampusTalkInfo()
-                campusTalkInfo.campus_talk_date = unicode(td_list[1].find("span").string)
                 campusTalkInfo.info_source = u'北京航天航空大学就业信息网'
                 campusTalkInfo.university_name = u'北京航天航空大学'
                 campusTalkInfo.university_name_short = u'北航'
                 campusTalkInfo.university_name_en = u'buaa-beijing'
-                campusTalkInfo.campus_talk_name = unicode(td_list[0].find("a").string)
-                campusTalkInfo.campus_talk_name = join(campusTalkInfo.campus_talk_name.split())[4:]
-                campusTalkInfo.href_url = u'http://career.buaa.edu.cn' + unicode(td_list[0].find("a")['href'])
-                detail_url = campusTalkInfo.href_url
+                campusTalkInfo.campus_talk_name = unicode(tr.a.string[0:50])
+                href_url = u'http://career.buaa.edu.cn' + unicode(tr.a['href'])
+                campusTalkInfo.campus_talk_date = tr.span.string[3:19]
+                print tr.span.string
+                campusTalkInfo.campus_talk_location = unicode(tr.find_all('span')[1]['title'])
+                detail_url = href_url
                 detail_opener=urllib2.build_opener()
                 detail_opener.addheaders = [('User-agent','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)')]
                 detail_response = detail_opener.open(detail_url)
                 detail_html = detail_response.read()
                 detail_soup = BeautifulSoup(detail_html)
-                campusTalkInfo.company_introduce = detail_soup.find(class_='list pic_news')
-                campusTalkInfo.campus_talk_date = unicode(detail_soup.find(class_='pbox_data').contents[5])
-                campusTalkInfo.campus_talk_location = unicode(detail_soup.find(class_='pbox_data').contents[11])
-                print detail_soup.find(class_='pbox_data').contents[11]
+                campusTalkInfo.company_introduce = detail_soup.find(class_="calender_style")
                 xjh = beihang_list.filter(campus_talk_name=campusTalkInfo.campus_talk_name)
                 if xjh:
                     if xjh[0].campus_talk_date != campusTalkInfo.campus_talk_date:
                         xjh[0].campus_talk_date = campusTalkInfo.campus_talk_date
-#                         xjh[0].campus_talk_location = campusTalkInfo.campus_talk_location
                         xjh[0].save()
-                else:
-                     
+                else:         
                     campusTalkInfo.save()
-#                 else:
-#                     detail_url = campusTalkInfo.href_url
-#                     detail_opener=urllib2.build_opener()
-#                     detail_opener.addheaders = [('User-agent','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)')]
-#                     detail_response = detail_opener.open(detail_url)
-#                     detail_html = detail_response.read()
-#                     detail_soup = BeautifulSoup(detail_html)
-#                     campusTalkInfo.company_introduce = detail_soup.find(class_='list pic_news')
-#                     campusTalkInfo.campus_talk_date = unicode(detail_soup.find(class_='pbox_data').contents[5])
-#                     campusTalkInfo.save()
         except Exception,e:  
             print str(e)
 
@@ -362,7 +348,7 @@ def beihang():
 def beijingligong():
     beijingligong_list = CampusTalkInfo.objects.filter(university_name_short="北京理工")
 
-    for page_index in range(500, 500+200):
+    for page_index in range(600, 600+200):
         url = 'http://job.bit.edu.cn/employment-activities.html?tx_extevent_pi1%5Bcmd%5D=preview&tx_extevent_pi1%5Buid%5D=' + str(page_index)
         try:
             opener=urllib2.build_opener()
@@ -398,7 +384,7 @@ def beijingligong():
 def beijingkeji():
     beijingkeji_list = CampusTalkInfo.objects.filter(university_name_short="北京科大")
     
-    for page_index in range(400, 400 + 200):
+    for page_index in range(500, 500 + 200):
         url = 'http://job.ustb.edu.cn/front/zph.jspa?channelId=763&tid=' + str(page_index)
         try:
             opener = urllib2.build_opener()
@@ -439,7 +425,7 @@ def beijingkeji():
 #原始网站过于复杂，从海投网获取数据
 def beijingjiaotong():
     
-    beijingjiaoda_list = CampusTalkInfo.objects.filter(university_name="北京交大")
+    beijingjiaoda_list = CampusTalkInfo.objects.filter(university_name="北京交通大学")
     opener = urllib2.build_opener()
     opener.addheaders = [('User-Agent','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11')]
         
@@ -449,10 +435,11 @@ def beijingjiaotong():
             response = opener.open(url)
             html = response.read()
             soup = BeautifulSoup(html)
+#             print soup
             campus_talk_name_list = soup.find_all(class_="preach-tbody-title")
             campus_talk_date_list = soup.find_all(class_="hold-ymd")
             campus_talk_location_list = soup.find_all(class_="preach-tbody-addre")
-            for i in range(1, 2):
+            for i in range(len(campus_talk_name_list)):
     
                 campusTalkInfo = CampusTalkInfo()
                 campusTalkInfo.info_source = u'北京交通大学就业咨询网'
@@ -479,8 +466,7 @@ def beijingjiaotong():
                     detail_html = detail_response.read()
                     detail_soup = BeautifulSoup(detail_html)
                     campusTalkInfo.company_introduce = detail_soup.find(class_="panel-body panel-body-text")
-                    print detail_soup.find_all("div")[0]
-#                     campusTalkInfo.save()
+                    campusTalkInfo.save()
         except Exception,e:
             print str(e)
         else:

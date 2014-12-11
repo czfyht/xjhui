@@ -6,6 +6,13 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+.homepage {
+
+	text-align: center;	
+}
+.homepage p{
+	text-align: left;	
+}
 
 .table-margin {
 	margin-top: 30px;
@@ -19,7 +26,48 @@ body {
 .list-group-item:hover{
 	background-color:yellow;
 }
+
+#down_android{
+	background: url({{STATIC_URL}}img/android.png) no-repeat 22px 14px #23BAB5;
+	border-bottom:#0F7C78 6px solid;
+	margin-bottom:35px;
+}		
+#down_ios{
+	background: url({{STATIC_URL}}img/ios.png) no-repeat 22px 14px #E29F1E;
+	border-bottom:#AA7716 6px solid;
+}
+	
+	
+/* Wrapper for page content to push down footer */
+#wrap {
+    position: relative;   /*重要！保证footer是相对于wapper位置绝对*/  
+    height: auto;          /* 保证页面能撑开浏览器高度时显示正常*/  
+    min-height: 100%  /* IE6不支持，IE6要单独配置*/  
+} 
+#main-content{  
+   padding-bottom: 180px; /*重要！给footer预留的空间*/  
+}
+
+html,
+body{
+	height: 100%;
+	margin:0;
+	padding:0;
+}
+#container {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -120px;/*margin-bottom的负值等于footer高度*/
+}
+.push,
+#footer {
+	height: 120px;
+	clear:both;
+}				
+
 html footer {
+   	height: 120px;         /* footer的高度一定要是固定值*/  
     background-color: #333;
     color: #bbb;
     text-align: center;
